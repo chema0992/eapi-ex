@@ -18,7 +18,7 @@
 
 ## 📥 설치 방법
 
-1. 우측 **[Releases](https://github.com/chema0992/eapi-ex/releases)**에서 최신 `eapi-extension.zip` 파일을 다운로드하거나, 초록색 **Code**를 클릭하고 Download Zip을 누르세요.
+1. 우측 [Releases](https://github.com/chema0992/eapi-ex/releases)에서 최신 `eapi-extension.zip` 파일을 다운로드하거나, 초록색 **Code**를 클릭하고 Download Zip을 누르세요.
 2. 다운로드한 zip 파일의 압축을 풉니다.
 3. 브라우저 주소창에 `chrome://extensions` 또는 `whale://extensions`를 입력하거나 확장앱 관리 메뉴로 들어갑니다.
 4. 우측 상단의 **개발자 모드**를 켭니다.
