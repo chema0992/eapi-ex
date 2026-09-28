@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>EAPI - 엔트리 커스텀 블록</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo-area">
+        <div class="logo-badge">EAPI</div>
+        <div>
+          <h1 class="title">엔트리 비공식 블록</h1>
+          <p class="subtitle">모듈별 활성화 스위치</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="module-list">
+      <!-- WebGL -->
+      <label class="module-item" for="webgl">
+        <div class="module-info">
+          <div class="module-icon icon-webgl">3D</div>
+          <div class="module-text">
+            <span class="module-title">WebGL 1.0</span>
+            <span class="module-desc">3D 그래픽 및 셰이더 연산</span>
+          </div>
+        </div>
+        <div class="switch">
+          <input type="checkbox" id="webgl" checked>
+          <span class="slider"></span>
+        </div>
+      </label>
+
+      <!-- WASM -->
+      <label class="module-item" for="wasm">
+        <div class="module-info">
+          <div class="module-icon icon-wasm">⚡</div>
+          <div class="module-text">
+            <span class="module-title">WASM 로더</span>
+            <span class="module-desc">WebAssembly 바이너리 실행</span>
+          </div>
+        </div>
+        <div class="switch">
+          <input type="checkbox" id="wasm" checked>
+          <span class="slider"></span>
+        </div>
+      </label>
+
+      <!-- WebAudio -->
+      <label class="module-item" for="webaudio">
+        <div class="module-info">
+          <div class="module-icon icon-audio">🎵</div>
+          <div class="module-text">
+            <span class="module-title">WebAudio</span>
+            <span class="module-desc">고급 실시간 음향 처리</span>
+          </div>
+        </div>
+        <div class="switch">
+          <input type="checkbox" id="webaudio" checked>
+          <span class="slider"></span>
+        </div>
+      </label>
+
+      <!-- WebWorker -->
+      <label class="module-item" for="webworker">
+        <div class="module-info">
+          <div class="module-icon icon-worker">⚙️</div>
+          <div class="module-text">
+            <span class="module-title">WebWorker</span>
+            <span class="module-desc">백그라운드 멀티스레딩</span>
+          </div>
+        </div>
+        <div class="switch">
+          <input type="checkbox" id="webworker" checked>
+          <span class="slider"></span>
+        </div>
+      </label>
+
+      <!-- IndexedDB -->
+      <label class="module-item" for="indexeddb">
+        <div class="module-info">
+          <div class="module-icon icon-db">💾</div>
+          <div class="module-text">
+            <span class="module-title">IndexedDB</span>
+            <span class="module-desc">대용량 데이터 로컬 저장</span>
+          </div>
+        </div>
+        <div class="switch">
+          <input type="checkbox" id="indexeddb" checked>
+          <span class="slider"></span>
+        </div>
+      </label>
+    </main>
+
+    <footer class="footer">
+      <span class="status-tip">새로고침 시 적용</span>
+      <a href="https://eapi-web.pages.dev" target="_blank" class="site-link">공식 웹사이트 ↗</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

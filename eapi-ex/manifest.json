@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "EAPI - 엔트리 커스텀 블록",
+  "version": "1.0.0",
+  "description": "WebGL, WASM, WebAudio, WebWorker, IndexedDB 지원 엔트리 비공식 블록",
+  "permissions": [
+    "storage"
+  ],
+ "icons": {
+     "16": "icons/icon16.png",
+     "48": "icons/icon48.png",
+     "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://playentry.org/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/*.user.js"
+      ],
+      "matches": [
+        "https://playentry.org/*"
+      ]
+    }
+  ]
+}
