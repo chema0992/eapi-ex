@@ -208,3 +208,20 @@ input:checked + .slider:before {
   color: var(--primary-hover);
   text-decoration: underline;
 }
+
+.update-banner {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #20c997; /* 브랜드 컬러 */
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.update-banner:hover {
+  background-color: #12b886;
+}
