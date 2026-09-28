@@ -182,46 +182,46 @@ input:checked + .slider:before {
   transform: translateX(18px);
 }
 
-/* --- Footer Section --- */
+/* 푸터 영역 전체 중앙 정렬 */
 .footer {
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border-color);
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  font-size: 11px;
+  justify-content: center;
+  gap: 8px;
 }
 
-.status-tip {
-  color: var(--text-sub);
-}
-
-.site-link {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.15s;
-}
-
-.site-link:hover {
-  color: var(--primary-hover);
-  text-decoration: underline;
-}
-
-.update-banner {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 6px 12px;
-  background-color: #20c997; /* 브랜드 컬러 */
-  color: #ffffff;
+/* 현재 버전 텍스트 (은은한 회색) */
+.version-text {
   font-size: 12px;
-  font-weight: bold;
-  border-radius: 6px;
+  color: #8e8e93;
+  font-weight: 500;
+}
+
+/* 업데이트 배너 (iOS 버튼 스타일로 풀-사이즈 중앙 배치) */
+.update-banner {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  background-color: #20c997;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
   text-decoration: none;
-  transition: background-color 0.2s;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(32, 201, 151, 0.25);
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .update-banner:hover {
   background-color: #12b886;
+}
+
+.update-banner:active {
+  transform: scale(0.98);
 }
