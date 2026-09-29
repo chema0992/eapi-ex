@@ -21,40 +21,48 @@ modules.forEach(mod => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. 현재 manifest.json의 버전을 자동으로 가져와서 UI에 표시
   const currentVersion = chrome.runtime.getManifest().version;
   const currentVerEl = document.getElementById('current-version');
   if (currentVerEl) currentVerEl.textContent = currentVersion;
 
-  // 2. 깃허브 최신 버전 체크 함수 실행
   checkAppUpdate(currentVersion);
 });
 
 async function checkAppUpdate(currentVersion) {
+  const versionStatusEl = document.getElementById('version-status');
+  const updateBtn = document.getElementById('update-btn');
+  const latestVerEl = document.getElementById('latest-version');
+
   try {
-    // GitHub API로 최신 release 정보 조회
     const response = await fetch('https://api.github.com/repos/chema0992/eapi-ex/releases/latest');
-    if (!response.ok) return;
+    if (!response.ok) throw new Error('API 응답 실패');
 
     const data = await response.json();
-    // 'v1.0.1' 형태에서 'v' 제거
     const latestVersion = data.tag_name.replace(/^v/, ''); 
 
-    // 최신 버전이 현재 버전보다 높은 경우
     if (isNewerVersion(latestVersion, currentVersion)) {
-      const updateBtn = document.getElementById('update-btn');
-      const latestVerEl = document.getElementById('latest-version');
-      
+      // 새 버전이 있는 경우: 최신 버전 뱃지 숨기고 업데이트 버튼 표시
+      if (versionStatusEl) versionStatusEl.style.display = 'none';
       if (latestVerEl) latestVerEl.textContent = latestVersion;
-      if (updateBtn) updateBtn.style.display = 'inline-block';
+      if (updateBtn) updateBtn.style.display = 'block';
+    } else {
+      // 이미 최신 버전인 경우
+      if (versionStatusEl) {
+        versionStatusEl.textContent = '✅ 최신 버전입니다';
+        versionStatusEl.className = 'version-status status-latest';
+        versionStatusEl.style.display = 'inline-block';
+      }
+      if (updateBtn) updateBtn.style.display = 'none';
     }
   } catch (error) {
-    // 오프라인이거나 API 오류 시 조용히 무시
-    console.log('버전 체크 실패:', error);
+    // 네트워크 오류 시 안내
+    if (versionStatusEl) {
+      versionStatusEl.textContent = '버전 확인 불가 (오프라인)';
+      versionStatusEl.className = 'version-status status-error';
+    }
   }
 }
 
-// 간단한 버전 비교 함수 (예: "1.0.1" > "1.0.0")
 function isNewerVersion(latest, current) {
   const l = latest.split('.').map(Number);
   const c = current.split('.').map(Number);

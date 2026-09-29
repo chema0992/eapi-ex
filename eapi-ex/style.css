@@ -3,7 +3,7 @@
    ========================================== */
 
 :root {
-  --primary: #20c997;         /* 엔트리 느낌의 민트/티을 컬러 */
+  --primary: #20c997;
   --primary-hover: #12b886;
   --bg-color: #f8fafc;
   --card-bg: #ffffff;
@@ -102,7 +102,6 @@ body {
   gap: 10px;
 }
 
-/* Icon Badges */
 .module-icon {
   width: 32px;
   height: 32px;
@@ -137,7 +136,7 @@ body {
   margin-top: 1px;
 }
 
-/* --- iOS Style Toggle Switch --- */
+/* --- Toggle Switch --- */
 .switch {
   position: relative;
   display: inline-block;
@@ -182,7 +181,7 @@ input:checked + .slider:before {
   transform: translateX(18px);
 }
 
-/* 푸터 영역 전체 중앙 정렬 */
+/* --- Footer Area --- */
 .footer {
   margin-top: 16px;
   padding-top: 12px;
@@ -194,32 +193,82 @@ input:checked + .slider:before {
   gap: 8px;
 }
 
-/* 현재 버전 텍스트 (은은한 회색) */
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.status-tip {
+  color: var(--text-sub);
+}
+
+.divider {
+  color: #cbd5e1;
+}
+
+.site-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.site-link:hover {
+  text-decoration: underline;
+}
+
+.version-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
 .version-text {
-  font-size: 12px;
-  color: #8e8e93;
+  font-size: 11px;
+  color: #94a3b8;
   font-weight: 500;
 }
 
-/* 업데이트 배너 (iOS 버튼 스타일로 풀-사이즈 중앙 배치) */
+/* 버전 상태 메시지 (최신 버전 등) */
+.version-status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.status-latest {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.status-error {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+/* 업데이트 버튼 */
 .update-banner {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 12px;
-  background-color: #20c997;
+  padding: 9px 12px;
+  background-color: var(--primary);
   color: #ffffff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 8px;
   text-decoration: none;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(32, 201, 151, 0.25);
+  box-shadow: 0 2px 6px rgba(32, 201, 151, 0.25);
   transition: background-color 0.2s, transform 0.1s;
 }
 
 .update-banner:hover {
-  background-color: #12b886;
+  background-color: var(--primary-hover);
 }
 
 .update-banner:active {

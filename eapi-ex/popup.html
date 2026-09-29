@@ -95,19 +95,27 @@
     </main>
 
     <footer class="footer">
-      <span class="status-tip">새로고침 시 적용</span>
-      <a href="https://eapi-web.pages.dev" target="_blank" class="site-link">공식 웹사이트 ↗</a>
+      <div class="footer-links">
+        <span class="status-tip">새로고침 시 적용</span>
+        <span class="divider">|</span>
+        <a href="https://eapi-web.pages.dev" target="_blank" class="site-link">공식 웹사이트 ↗</a>
+      </div>
+      
+      <div class="version-area">
+        <span class="version-text">v<span id="current-version">1.0.0</span></span>
+        
+        <!-- 상태 표시 영역 (기본값: 최신 버전) -->
+        <div id="version-status" class="version-status status-latest">
+          ✅ 최신 버전입니다
+        </div>
+
+        <!-- 업데이트가 있을 때만 표시될 버튼 -->
+        <a id="update-btn" class="update-banner" href="https://github.com/chema0992/eapi-ex/releases/latest" target="_blank" style="display: none;">
+          🚀 새 버전(v<span id="latest-version"></span>) 업데이트
+        </a>
+      </div>
     </footer>
   </div>
-
-    <div class="footer">
-  <span class="version-text">v<span id="current-version">1.0.0</span></span>
-  
-  <!-- 새 버전이 있을 때만 나타날 버튼 (기존엔 hidden) -->
-  <a id="update-btn" class="update-banner" href="https://github.com/chema0992/eapi-ex/releases/latest" target="_blank" style="display: none;">
-    🚀 새 버전(v<span id="latest-version"></span>) 업데이트
-  </a>
-</div>
 
   <script src="popup.js"></script>
 </body>
