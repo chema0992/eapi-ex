@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "EAPI - 엔트리 커스텀 블록",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "WebGL, WASM, WebAudio, WebWorker, IndexedDB 지원 엔트리 비공식 블록",
   "permissions": [
     "storage"
