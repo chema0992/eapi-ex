@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Entry EAPI Core
 // @namespace    http://tampermonkey.net/
-// @version      1.3.1
+// @version      1.3.5
 // @description  Entry loader, EAPI module init, category render
 // @match        *://playentry.org/*
 // @grant        none
@@ -38,31 +38,26 @@
     var Entry;
     var EntryStatic;
     var jq;
-    var modulesInjected = false;
+    var didRender = false;
 
     function injectModules() {
-        if (modulesInjected || !window.EAPI || !window.EAPI.modules) {
-            return;
-        }
-        var allOk = true;
+        if (!window.EAPI || !window.EAPI.modules) return;
         window.EAPI.modules.forEach(function (module) {
             if (typeof module.init === "function" && !module.injected) {
                 try {
                     module.init(targetWindow, Entry, EntryStatic, jq);
                     module.injected = true;
                 } catch (e) {
-                    allOk = false;
                     console.error("[EAPI Core] module init error:", module.name || "unknown", e);
                 }
             }
         });
-        if (allOk) {
-            modulesInjected = true;
-            console.log("[EAPI Core] modules injected (early)");
-        }
     }
 
     function renderEAPI() {
+        // 재진입/중복 생성 차단 (module.init이 render를 다시 호출하는 경우)
+        if (didRender) return;
+
         injectModules();
 
         var uniqueCustomCategories = [];
@@ -75,9 +70,22 @@
         });
         window.EAPI.categories = uniqueCustomCategories;
 
+        var CATEGORY_ORDER = ["WebGL", "WASM", "WebAudio", "Worker", "Storage"];
+
+        uniqueCustomCategories.sort(function (a, b) {
+            var ai = CATEGORY_ORDER.indexOf(a.category);
+            var bi = CATEGORY_ORDER.indexOf(b.category);
+            if (ai < 0) ai = 999;
+            if (bi < 0) bi = 999;
+            return ai - bi;
+        });
+
         if (!Entry.playground || !Entry.playground.mainWorkspace || !Entry.playground.blockMenu) {
             return;
         }
+
+        // 생성 직전에 true → init 도중 재호출돼도 두 번 안 그림
+        didRender = true;
 
         var finalCategories = baseCategories.slice();
         uniqueCustomCategories.forEach(function (cat) {
@@ -99,6 +107,17 @@
 
         Entry.playground.blockMenu._categoryData = EntryStatic.getAllBlocks();
 
+        // 카테고리별 블록 이름 중복 제거
+        if (Entry.playground.blockMenu._categoryData) {
+            Entry.playground.blockMenu._categoryData.forEach(function (c) {
+                if (c.blocks && c.blocks.length) {
+                    c.blocks = c.blocks.filter(function (name, i, arr) {
+                        return arr.indexOf(name) === i;
+                    });
+                }
+            });
+        }
+
         uniqueCustomCategories.forEach(function (cat) {
             Entry.playground.blockMenu._generateCategoryCode(cat.category);
             if (jq) {
@@ -116,6 +135,9 @@
         });
     }
 
+    var lastModCount = -1;
+    var stableMs = 0;
+
     var timer = setInterval(function () {
         var isIframe = false;
         var iframe = document.querySelector("iframe.project_iframe") || document.querySelector("iframe");
@@ -126,15 +148,25 @@
 
         Entry = targetWindow.Entry;
         EntryStatic = targetWindow.EntryStatic;
-        if (!Entry || !Entry.block) {
-            return;
-        }
+        if (!Entry || !Entry.block) return;
 
         jq = targetWindow.$;
 
+        // 불러오기 유지: 정의만 조기 등록
         injectModules();
 
         if (!isIframe && (!Entry.playground || !Entry.playground.mainWorkspace || !Entry.playground.blockMenu)) {
+            return;
+        }
+
+        // 모듈 개수가 잠시 안 변할 때까지 대기 (카테고리 순서 안정화)
+        var modCount = (window.EAPI.modules || []).length;
+        if (modCount !== lastModCount) {
+            lastModCount = modCount;
+            stableMs = Date.now();
+            return;
+        }
+        if (Date.now() - stableMs < 200) {
             return;
         }
 
@@ -143,12 +175,5 @@
 
         window.EAPI.render = renderEAPI;
         renderEAPI();
-
-        if (typeof Entry.addEventListener === "function") {
-            Entry.addEventListener("loadComplete", function () {
-                console.log("[EAPI Core] loadComplete re-render");
-                renderEAPI();
-            });
-        }
     }, 50);
 })();
